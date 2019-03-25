@@ -1,7 +1,12 @@
+import logging
+
 from rest_framework import viewsets, serializers
 
 from . import models
 
+
+logger = logging.getLogger(__name__)
+logger.debug('this is %s', __name__)
 
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,10 +25,10 @@ class BelongingSerializer(serializers.ModelSerializer):
         """
         Check if clientId exists
         """
-        print(__name__, 'validate is called')
+        logger.debug('validate is called')
         try:
             client_id = data.pop('client')['id']
-            print(client_id)
+            logger.debug(client_id)
             data['client'] = models.Client.objects.get(pk=client_id)
         except models.Client.DoesNotExist:
             raise serializers.ValidationError(F"Given client cannot be found: id={client_id}")

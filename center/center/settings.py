@@ -61,6 +61,30 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
+LOGGING = {
+    'version': 1,
+    'formatters': {
+        'default': {
+            'format': '%(levelname)s: %(module)s (%(lineno)d): %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'default'
+        },
+    },
+    'loggers': {
+        'django.server':{
+            'handlers': ['console'],
+        },
+        'cached_mv':{
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
+    }
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
